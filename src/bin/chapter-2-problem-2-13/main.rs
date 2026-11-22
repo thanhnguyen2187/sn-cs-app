@@ -8,20 +8,13 @@ fn bic(x: u8, m: u8) -> u8 {
     x.bitand(!m)
 }
 
-fn bool_not(x: u8) -> u8 {
-    bic(u8::MAX, x)
-}
-
 fn bool_or(x: u8, y: u8) -> u8 {
     bis(x, y)
 }
 
-fn bool_and(x: u8, y: u8) -> u8 {
-    bic(x, bool_not(y))
-}
-
 fn bool_xor(x: u8, y: u8) -> u8 {
-    bool_and(bool_or(x, y), bool_not(bool_and(x, y)))
+    // bool_and(bool_or(x, y), bool_not(bool_and(x, y)))
+    bis(bic(x, y), bic(y, x))
 }
 
 #[cfg(test)]
@@ -52,13 +45,6 @@ mod tests {
     }
 
     #[test]
-    fn test_not() {
-        //      0b10101101
-        // NOT: 0b01010010
-        assert_eq!(bool_not(X), 0b01010010);
-    }
-
-    #[test]
     fn test_xor() {
         //      0b10101101
         //      0b11101100
@@ -69,16 +55,4 @@ mod tests {
 }
 
 fn main() {
-    //      0b10101101
-    // NOT: 0b01010010
-
-    // println!("{:#08b}", bool_not(x));
-    // println!("{:#08b}", bool_or(0b10101101, 0b11101100));
-    // println!("{:#08b}", bool_and(0b10101101, 0b11101100));
-    // println!("{:#08b}", bool_xor(0b10101101, 0b11101100));
-    //      0b10101101
-    //      0b11101100
-    // XOR: 0b01000001
-    // AND: 0b10101100
-    // OR:  0b
 }
